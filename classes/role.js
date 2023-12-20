@@ -1,0 +1,56 @@
+const Database = require('../lib/db.js');
+const Main = require('./main.js')
+const inquirer = require('inquirer');
+
+
+class Role extends Main {
+    constructor(db) {
+        super(db);
+        this.content = 'role';
+        this.question = [
+            {
+                type: "input",
+                message: "What is the name of the role?",
+                name: "newRole",
+            },
+            {
+                type: "input",
+                message: "What is the salary of the role?",
+                name: "newSalary",
+                when: (answer) => answer.newRole,
+            },
+            {
+                type: "list",
+                message: "Which department does the role belong to?",
+                name: "choose-dept",
+                choices: async () => {
+                    const departmentNames = await this.fetchDeptNames();
+                    return departmentNames.map((dept) => dept.name);
+                },
+                when: (answer) => answer.newSalary,
+            },
+        ]
+    }
+    async fetchDeptNames() {
+        const sql = `SELECT id, name FROM department`;
+        const [results] = await this.db.query(sql);
+        return results;
+    }
+
+    async viewAll() {
+        const sql = `SELECT role.title, role.salary, department.name AS Department
+        FROM role JOIN department ON role.department_id = department.id`;
+        await super.viewAll(sql, this.content);
+    }
+    async addNew() {
+        const response = await inquirer.prompt(this.question)
+        console.log('response = ', response);
+        const roleName = response['newRole'];
+        const newSalary = response['newSalary'];
+        const selectedDept = response['choose-dept'];
+
+        const sql = `INSERT INTO ${this.content} (title, salary, department_id) VALUES (?, ?, (SELECT id FROM department WHERE name = ?))`
+        await super.addNew(sql, [roleName, newSalary, selectedDept.id], this.content);
+    }
+}
+module.exports = Role;
