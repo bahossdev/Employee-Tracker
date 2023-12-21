@@ -42,7 +42,6 @@ class Main {
     async addNew(sql, values, content) {
 
         try {
-            await this.db.connect();
             await this.db.query(sql, values);
             console.log(`New ${content} added successfully!`);
             // await this.next();
