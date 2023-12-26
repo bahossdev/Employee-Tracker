@@ -6,7 +6,7 @@ class Role extends Main {
     constructor(db, run) {
         super(db, run);
         this.content = 'role';
-        this.question = [
+        this.question1 = [
             {
                 type: "input",
                 message: "What is the name of the role?",
@@ -36,18 +36,22 @@ class Role extends Main {
                 message: "Which department does the role belong to?",
                 name: "selectedDept",
                 choices: async () => {
-                    const depts = await this.fetchDeptNames();
+                    const depts = await super.fetch('department');
                     return depts.map((dept) => ({name: dept.name, value: dept.id}));
                 },
             },
-        ]
-    }
-
-    async fetchDeptNames() {
-        await this.db.connect();
-        const sql = `SELECT * FROM department`;
-        const [results] = await this.db.query(sql);
-        return results;
+        ];
+        this.question2 = [
+            {
+                type: "list",
+                message: "Which role do you want to delete?",
+                name: "deleteRole",
+                choices: async () => {
+                    const roles = await super.fetch('role');
+                    return roles.map((role) => ({ name: role.title, value: role.id }));
+                },
+            }
+        ];
     }
 
     async viewAll() {
@@ -64,7 +68,7 @@ class Role extends Main {
     }
 
     async addNew() {
-        const response = await inquirer.prompt(this.question)
+        const response = await inquirer.prompt(this.question1)
         const { newRole, newSalary, selectedDept } = response;
 
         try {
@@ -75,6 +79,14 @@ class Role extends Main {
         } catch (error) {
             console.error('Error adding new role:', error.message);
         }
+    }
+
+    async delete() {
+        const response = await inquirer.prompt(this.question2);
+        const deleteRole = response['deleteRole'];
+        // console.log('role: ' + deleteRole);
+        const sql = `DELETE FROM ${this.content} WHERE id = ?`
+        await super.delete(sql, [deleteRole], this.content);
     }
 }
 module.exports = Role;

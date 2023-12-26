@@ -1,23 +1,25 @@
 -- Department
 INSERT INTO department (name) 
 VALUES
-("Research and Development"),
-("Product Design"),
-("Software Engineering"),
-("Marketing");
+("Engineering"),
+("Marketing and Sales"),
+("Finance"),
+("Human Resource");
 
 -- Role
 INSERT INTO role (title, salary, department_id)
 VALUES
-("Chief Technology Officer", 180000, 1),
-("Product Design Lead", 120000, 2),
-("Software Architect", 140000, 3),
-("Marketing Director", 110000, 4),
+("CEO", 250000, null),
+("Enigineering Manager", 190000, 1),
+("Software Architect", 140000, 1),
 ("Hardware Engineer", 130000, 1),
-("UX/UI Designer", 100000, 2),
-("Full Stack Developer", 120000, 3),
-("Content Strategist", 90000, 4),
-("Innovation Specialist", 150000, 1);
+("R&D Engineer", 120000, 1),
+("Full Stack Developer", 120000, 1),
+("Marketing Director", 150000, 2),
+("Salesperson", 100000, 2),
+("Chief Financial Officer", 160000, 3),
+("Accountant", 90000, 3),
+("Human Resource Specialist", 120000, 4);
 
 
 -- Employee
@@ -25,19 +27,19 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
 ("Alexander", "Johnson", 1, null),
 ("Emma", "Smith", 2, 1),
-("Amir", "Patel", 3, 1),
-("Sophie", "Schmidt", 4, null),
-("Charlie", "Wong", 5, 1),
-("Grace", "Miller", 6, 2),
-("Kamran", "Kousha", 7, 3),
-("Arianna", "De Luca", 8, null),
-("Oliver", "Anderson", 9, 1),
-("Nora", "Williams", 5, 1),
-("Henry", "Moore", 6, 2),
-("Kim", "Yang", 7, 3),
-("Leo", "Clark", 8, null),
-("Mia", "Walker", 9, 1),
-("Ava", "Parker", 5, 1),
-("Lucas", "Carter", 6, 2),
-("Fang", "Li", 7, 3),
-("Oliver", "Garcia", 7, 3);
+("Amir", "Patel", 3, 2),
+("Sophie", "Schmidt", 4, 2),
+("Charlie", "Wong", 4, 2),
+("Grace", "Miller", 5, 2),
+("Parsa", "Kousha", 6, 2),
+("Arianna", "De Luca", 6, 2),
+("Oliver", "Anderson", 7, 1),
+("Nora", "Williams", 8, 9),
+("Henry", "Moore", 8, 9),
+("Kim", "Yang", 9, 1),
+("Leo", "Clark", 10, 12),
+("Mia", "Walker", 10, 12),
+("Ava", "Parker", 11, 1),
+("Lucas", "Carter", 11, 15),
+("Fang", "Li", 6, 2),
+("Oliver", "Garcia", 3, 2);

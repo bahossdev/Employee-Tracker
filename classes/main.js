@@ -1,13 +1,22 @@
 class Main {
-    constructor(db, run) {
+    constructor(db, run, choice) {
         this.db = db;
         this.run = run;
+        this.choice = choice;
+    }
+
+    async fetch(content) {
+        await this.db.connect();
+        const sql = `SELECT * FROM ${content}`;
+        const [results] = await this.db.query(sql);
+        return results;
     }
 
     async viewAll(sql, content) {
         try {
+            // console.log('choice; ' + this.choice);
             await this.db.connect();
-            const [results, fields] = await this.db.query(sql);
+            const [results] = await this.db.query(sql);
             console.log(`All ${content}s:`);
             console.table(results);
             await this.run();
@@ -26,6 +35,15 @@ class Main {
         }
     }
 
+    async delete(sql, values, content) {
+        try {
+            await this.db.query(sql, values);
+            console.log(`Selected ${content} was deleted successfully!`);
+            await this.run();
+        } catch (error) {
+            console.log(`Error deleting ${content}: `, error.message);
+        }
+    }
     async update(sql, values, content) {
         try {
             await this.db.query(sql, values);
