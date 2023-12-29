@@ -6,6 +6,12 @@ class Employee extends Main {
     constructor(db, run, choice) {
         super(db, run, choice);
         this.content = 'employee';
+        
+        const listSize = {
+            type: "list",
+            pageSize: 20,
+        };
+
         this.question1 = [
             {
                 type: "input",
@@ -32,7 +38,7 @@ class Employee extends Main {
                 }
             },
             {
-                type: "list",
+                ...listSize,
                 message: "What is the employee's role?",
                 name: "employeeRole",
                 choices: async () => {
@@ -41,19 +47,21 @@ class Employee extends Main {
                 }
             },
             {
-                type: "list",
+                ...listSize,
                 message: "Who is the employee's manager?",
                 name: "manager",
                 choices: async () => {
                     const managers = await super.fetch('employee');
-                    return managers.map((manager) => ({ name: manager.first_name + ' ' + manager.last_name, value: manager.id }));
-                }
+                    const managerOptions = managers.map((manager) => ({ name: manager.first_name + ' ' + manager.last_name, value: manager.id }));
+                    managerOptions.unshift({ name: 'None', value: null });
+                    return managerOptions;
+                },
             },
         ];
 
         this.question2 = [
             {
-                type: "list",
+                ...listSize,
                 message: "Which employee do you want to delete?",
                 name: "deleteEmployee",
                 choices: async () => {
@@ -65,7 +73,7 @@ class Employee extends Main {
 
         this.question3 = [
             {
-                type: "list",
+                ...listSize,
                 message: "Which employee's role do you want to update?",
                 name: "employeeUpdate",
                 choices: async () => {
@@ -74,7 +82,7 @@ class Employee extends Main {
                 }
             },
             {
-                type: "list",
+                ...listSize,
                 message: "Which role do you want to assign the selected employee?",
                 name: "updateRole",
                 choices: async () => {
@@ -82,7 +90,30 @@ class Employee extends Main {
                     return updateRole.map((role) => ({ name: role.title, value: role.id }))
                 }
             }
-        ]
+        ];
+
+        this.question4 = [
+            {
+                ...listSize,
+                message: "Which employee's manager do you want to update?",
+                name: "employeeUpdate",
+                choices: async () => {
+                    const employees = await super.fetch('employee');
+                    return employees.map((employee) => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+                }
+            },
+            {
+                ...listSize,
+                message: `Who will be the new manager?`,
+                name: "updateManager",
+                choices: async (answers) => {
+                    const updateManager = await super.fetch('employee');
+                    return updateManager
+                        .filter(employee => employee.id !== answers.employeeUpdate)
+                        .map((employee) => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+                }
+            }
+        ];
     }
 
     async viewAll() {
@@ -103,7 +134,8 @@ class Employee extends Main {
                     ORDER BY employee.id`;
             await super.viewAll(sql, this.content);
         }
-        if (userChoice == 'View Employees by Manager') {
+
+        if (userChoice === 'View Employees by Manager') {
             const sql = `SELECT 
                             CONCAT(manager.first_name, ' ', manager.last_name) AS Manager,
                             role.title AS Title,
@@ -118,7 +150,7 @@ class Employee extends Main {
             await super.viewAll(sql, this.content);
         }
 
-        if (userChoice == 'View Employees by Department') {
+        if (userChoice === 'View Employees by Department') {
             const sql = `SELECT 
                             department.name AS Department,
                             GROUP_CONCAT(' ', employee.first_name, ' ', employee.last_name) AS Employees
@@ -128,11 +160,6 @@ class Employee extends Main {
                         GROUP BY department.id`;
             await super.viewAll(sql, this.content);
         }
-
-    }
-
-    async viewBymanager() {
-
     }
 
     async addNew() {
@@ -155,13 +182,25 @@ class Employee extends Main {
     }
 
     async update() {
-        const response = await inquirer.prompt(this.question3);
-        const { employeeUpdate, updateRole } = response;
+        const userChoice = stripAnsi(this.choice['main-menu']);
+        if (userChoice === 'Update Employee Role') {
+            const response = await inquirer.prompt(this.question3);
+            const { employeeUpdate, updateRole } = response;
 
-        const sql = `UPDATE employee
-                     SET role_id = ?
-                     WHERE id = ?`;
-        await super.update(sql, [updateRole, employeeUpdate], this.content);
+            const sql = `UPDATE employee
+                         SET role_id = ?
+                         WHERE id = ?`;
+            await super.update(sql, [updateRole, employeeUpdate], this.content);
+        }
+        if (userChoice === 'Update Employee Manager') {
+            const response = await inquirer.prompt(this.question4);
+            const { employeeUpdate, updateManager } = response;
+
+            const sql = `UPDATE employee
+                         SET manager_id = ?
+                         WHERE id = ?`;
+            await super.update(sql, [updateManager, employeeUpdate], this.content);
+        }
     }
 }
 

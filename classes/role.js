@@ -6,10 +6,16 @@ class Role extends Main {
     constructor(db, run) {
         super(db, run);
         this.content = 'role';
+
+        const listSize = {
+            type: "list",
+            pageSize: 20,
+        };
+
         this.question1 = [
             {
                 type: "input",
-                message: "What is the name of the role?",
+                message: "What is the name of the new role?",
                 name: "newRole",
                 validate: data => {
                     if (data.length < 2) {
@@ -21,7 +27,7 @@ class Role extends Main {
             },
             {
                 type: "input",
-                message: "What is the salary of the role?",
+                message: "What is the salary of this role?",
                 name: "newSalary",
                 validate: data => {
                     if (data < 60000) {
@@ -32,8 +38,8 @@ class Role extends Main {
                 }
             },
             {
-                type: "list",
-                message: "Which department does the role belong to?",
+                ...listSize,
+                message: "Which department does this role belong to?",
                 name: "selectedDept",
                 choices: async () => {
                     const depts = await super.fetch('department');
@@ -43,7 +49,7 @@ class Role extends Main {
         ];
         this.question2 = [
             {
-                type: "list",
+                ...listSize,
                 message: "Which role do you want to delete?",
                 name: "deleteRole",
                 choices: async () => {

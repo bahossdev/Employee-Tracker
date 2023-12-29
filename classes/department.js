@@ -6,16 +6,22 @@ class Department extends Main {
     constructor(db, run) {
         super(db, run);
         this.content = 'department';
+                
+        const listSize = {
+            type: "list",
+            pageSize: 20,
+        };
+
         this.question1 = [
             {
                 type: "input",
-                message: "What is the name of the department?",
+                message: "What is the name of the new department?",
                 name: "newDept",
             }
         ];
         this.question2 = [
             {
-                type: "list",
+                ...listSize,
                 message: "Which department do you want to delete?",
                 name: "deleteDept",
                 choices: async () => {
