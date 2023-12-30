@@ -22,7 +22,7 @@ class Main {
         try {
             await this.db.connect();
             const [results] = await this.db.query(sql);
-            console.log(chalk.bgGreen.white(`\n All ${this.cap(content)}s: `));
+            console.log(chalk.bgGreen.white(`\n 📋 All ${this.cap(content)}s: `));
             console.table(results);
             await this.run();
         } catch (error) {
