@@ -1,4 +1,5 @@
-const Main = require('./main.js')
+// Importing helpers and libraries
+const Main = require('./main.js');
 const inquirer = require('inquirer');
 const stripAnsi = require('strip-ansi');
 
@@ -6,12 +7,13 @@ class Employee extends Main {
     constructor(db, run, choice) {
         super(db, run, choice);
         this.content = 'employee';
-        
+
         const listSize = {
             type: "list",
             pageSize: 20,
         };
 
+        // Questions for adding a new employee
         this.question1 = [
             {
                 type: "input",
@@ -19,7 +21,7 @@ class Employee extends Main {
                 name: "firstName",
                 validate: data => {
                     if (data.length < 2) {
-                        return 'First name has to be at least 2 characters!'
+                        return 'First name has to be at least 2 characters!';
                     } else {
                         return true;
                     }
@@ -31,7 +33,7 @@ class Employee extends Main {
                 name: "lastName",
                 validate: data => {
                     if (data.length < 2) {
-                        return 'Last name has to be at least 2 characters!'
+                        return 'Last name has to be at least 2 characters!';
                     } else {
                         return true;
                     }
@@ -59,6 +61,7 @@ class Employee extends Main {
             },
         ];
 
+        // Questions for deleting an employee
         this.question2 = [
             {
                 ...listSize,
@@ -71,6 +74,7 @@ class Employee extends Main {
             }
         ];
 
+        // Questions for updating an employee's role
         this.question3 = [
             {
                 ...listSize,
@@ -78,7 +82,7 @@ class Employee extends Main {
                 name: "employeeUpdate",
                 choices: async () => {
                     const employees = await super.fetch('employee');
-                    return employees.map((employee) => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }))
+                    return employees.map((employee) => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
                 }
             },
             {
@@ -87,11 +91,12 @@ class Employee extends Main {
                 name: "updateRole",
                 choices: async () => {
                     const updateRole = await super.fetch('role');
-                    return updateRole.map((role) => ({ name: role.title, value: role.id }))
+                    return updateRole.map((role) => ({ name: role.title, value: role.id }));
                 }
             }
         ];
 
+        // Questions for updating an employee's manager
         this.question4 = [
             {
                 ...listSize,
@@ -116,6 +121,8 @@ class Employee extends Main {
         ];
     }
 
+    // View all employees along with role, manager, and department information
+    // View all employees along with role, manager, and department information
     async viewAll() {
         const userChoice = stripAnsi(this.choice['main-menu']);
         if (userChoice == 'View All Employees') {
@@ -135,33 +142,36 @@ class Employee extends Main {
             await super.viewAll(sql, this.content);
         }
 
+        // View employees grouped by their manager
         if (userChoice === 'View Employees by Manager') {
             const sql = `SELECT 
-                            CONCAT(manager.first_name, ' ', manager.last_name) AS Manager,
-                            role.title AS Title,
-                            GROUP_CONCAT(' ', employee.first_name, ' ', employee.last_name) AS Employees,
-                            department.name AS Department 
-                        FROM employee AS manager
-                        JOIN role ON manager.role_id = role.id
-                        RIGHT JOIN employee ON manager.id = employee.manager_id
-                        LEFT JOIN department ON role.department_id = department.id
-                        WHERE manager.manager_id IS NOT NULL
-                        GROUP BY manager.id`;
+                        CONCAT(manager.first_name, ' ', manager.last_name) AS Manager,
+                        role.title AS Title,
+                        GROUP_CONCAT(' ', employee.first_name, ' ', employee.last_name) AS Employees,
+                        department.name AS Department 
+                    FROM employee AS manager
+                    JOIN role ON manager.role_id = role.id
+                    RIGHT JOIN employee ON manager.id = employee.manager_id
+                    LEFT JOIN department ON role.department_id = department.id
+                    WHERE manager.manager_id IS NOT NULL
+                    GROUP BY manager.id`;
             await super.viewAll(sql, this.content);
         }
 
+        // View employees grouped by their department
         if (userChoice === 'View Employees by Department') {
             const sql = `SELECT 
-                            department.name AS Department,
-                            GROUP_CONCAT(' ', employee.first_name, ' ', employee.last_name) AS Employees
-                        FROM department
-                        JOIN role ON role.department_id = department.id
-                        JOIN employee ON employee.role_id = role.id
-                        GROUP BY department.id`;
+                        department.name AS Department,
+                        GROUP_CONCAT(' ', employee.first_name, ' ', employee.last_name) AS Employees
+                    FROM department
+                    JOIN role ON role.department_id = department.id
+                    JOIN employee ON employee.role_id = role.id
+                    GROUP BY department.id`;
             await super.viewAll(sql, this.content);
         }
     }
 
+    // Add a new employee
     async addNew() {
         const response = await inquirer.prompt(this.question1);
         const { firstName, lastName, employeeRole, manager } = response;
@@ -173,35 +183,40 @@ class Employee extends Main {
 
     }
 
+    // Delete an employee
     async delete() {
         const response = await inquirer.prompt(this.question2);
         const deleteEmployee = response['deleteEmployee'];
-        console.log('employee: ' + deleteEmployee);
         const sql = `DELETE FROM ${this.content} WHERE id = ?`
         await super.delete(sql, [deleteEmployee], this.content);
     }
 
+    // Update an employee's role or manager
     async update() {
         const userChoice = stripAnsi(this.choice['main-menu']);
+        // Update employee's role
         if (userChoice === 'Update Employee Role') {
             const response = await inquirer.prompt(this.question3);
             const { employeeUpdate, updateRole } = response;
 
             const sql = `UPDATE employee
-                         SET role_id = ?
-                         WHERE id = ?`;
+                     SET role_id = ?
+                     WHERE id = ?`;
             await super.update(sql, [updateRole, employeeUpdate], this.content);
         }
+
+        // Update employee's manager
         if (userChoice === 'Update Employee Manager') {
             const response = await inquirer.prompt(this.question4);
             const { employeeUpdate, updateManager } = response;
 
             const sql = `UPDATE employee
-                         SET manager_id = ?
-                         WHERE id = ?`;
+                     SET manager_id = ?
+                     WHERE id = ?`;
             await super.update(sql, [updateManager, employeeUpdate], this.content);
         }
     }
 }
 
+// Export the Employee class for external use
 module.exports = Employee;

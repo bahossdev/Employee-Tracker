@@ -1,6 +1,6 @@
-const Main = require('./main.js')
+// Importing helpers and libraries
+const Main = require('./main.js');
 const inquirer = require('inquirer');
-
 
 class Role extends Main {
     constructor(db, run) {
@@ -12,6 +12,7 @@ class Role extends Main {
             pageSize: 20,
         };
 
+        // Questions for adding a new role
         this.question1 = [
             {
                 type: "input",
@@ -19,7 +20,7 @@ class Role extends Main {
                 name: "newRole",
                 validate: data => {
                     if (data.length < 2) {
-                        return 'Role name has to be at least 2 characters!'
+                        return 'Role name has to be at least 2 characters!';
                     } else {
                         return true;
                     }
@@ -31,7 +32,7 @@ class Role extends Main {
                 name: "newSalary",
                 validate: data => {
                     if (data < 60000) {
-                        return 'Minimum salary is $60,000!!'
+                        return 'Minimum salary is $60,000!';
                     } else {
                         return true;
                     }
@@ -43,10 +44,12 @@ class Role extends Main {
                 name: "selectedDept",
                 choices: async () => {
                     const depts = await super.fetch('department');
-                    return depts.map((dept) => ({name: dept.name, value: dept.id}));
+                    return depts.map((dept) => ({ name: dept.name, value: dept.id }));
                 },
             },
         ];
+
+        // Questions for deleting a role
         this.question2 = [
             {
                 ...listSize,
@@ -60,6 +63,7 @@ class Role extends Main {
         ];
     }
 
+    // View all roles along with department information
     async viewAll() {
         const sql = `SELECT 
                         role.id AS ID, 
@@ -73,8 +77,9 @@ class Role extends Main {
         await super.viewAll(sql, this.content);
     }
 
+    // Add a new role
     async addNew() {
-        const response = await inquirer.prompt(this.question1)
+        const response = await inquirer.prompt(this.question1);
         const { newRole, newSalary, selectedDept } = response;
 
         try {
@@ -87,12 +92,14 @@ class Role extends Main {
         }
     }
 
+    // Delete a role
     async delete() {
         const response = await inquirer.prompt(this.question2);
         const deleteRole = response['deleteRole'];
-        // console.log('role: ' + deleteRole);
-        const sql = `DELETE FROM ${this.content} WHERE id = ?`
+        const sql = `DELETE FROM ${this.content} WHERE id = ?`;
         await super.delete(sql, [deleteRole], this.content);
     }
 }
+
+// Export the Role class for external use
 module.exports = Role;

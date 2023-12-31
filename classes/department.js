@@ -1,3 +1,4 @@
+// Importing helpers and libraries
 const Main = require('./main.js')
 const inquirer = require('inquirer');
 const chalk = require('chalk');
@@ -7,11 +8,13 @@ class Department extends Main {
         super(db, run);
         this.content = 'department';
 
+        // Define common properties for list-based questions
         const listSize = {
             type: "list",
             pageSize: 20,
         };
 
+        // Questions for adding a new department
         this.question1 = [
             {
                 type: "input",
@@ -20,6 +23,7 @@ class Department extends Main {
             }
         ];
 
+        // Questions for deleting a department
         this.question2 = [
             {
                 ...listSize,
@@ -32,6 +36,7 @@ class Department extends Main {
             }
         ];
 
+        // Questions for viewing total budget of a department
         this.question3 = [
             {
                 ...listSize,
@@ -45,11 +50,13 @@ class Department extends Main {
         ];
     }
 
+    // View all departments
     async viewAll() {
         const sql = `SELECT id AS 'No.', name AS 'Department' FROM ${this.content}`;
         await super.viewAll(sql, this.content);
     }
 
+    // Add a new department
     async addNew() {
         const response = await inquirer.prompt(this.question1);
         const departmentName = response['newDept'];
@@ -57,6 +64,7 @@ class Department extends Main {
         await super.addNew(sql, [departmentName], this.content);
     }
 
+    // Delete a department
     async delete() {
         const response = await inquirer.prompt(this.question2);
         const deleteDept = response['deleteDept'];
@@ -64,6 +72,7 @@ class Department extends Main {
         await super.delete(sql, [deleteDept], this.content);
     }
 
+    // View total budget of a department
     async budget() {
         const response = await inquirer.prompt(this.question3);
         const deptBudget = response['deptBudget'];
@@ -90,4 +99,6 @@ class Department extends Main {
         }
     }
 }
+
+// Export the Department class for external use
 module.exports = Department;
