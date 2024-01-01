@@ -31,6 +31,7 @@ This Node.js command-line application allows users to efficiently manage employe
 *   **Department Management:** View all departments and their budgets.
 *   **Enhanced Interface:** Utilizes Inquirer for intuitive interaction.
 *   **MySQL Database:** Persists data in a MySQL database for reliability.
+*   **Intuitive UX:** Enjoy the user-friendly and colourful interface.
 
 *   **Ensure smooth employee management with this versatile command-line application!**
 
@@ -101,11 +102,11 @@ Please refer to the LICENSE in the repo.
 
 Link to Walkthrough Video demonstrating the functionality of the Employee-Tracker:
 
-- [Watch Walkthrough]()
+- [Watch Walkthrough](https://drive.google.com/file/d/15MjlNN6rCtvgHZAyQ13Qe0ZWAOha0BVL/view?usp=share_link)
 
 ## Repository
 
-https://github.com/bahossdev/Employee-Tracker
+- [Link to the Repo](https://github.com/bahossdev/Employee-Tracker)
 
 ## Questions
 
