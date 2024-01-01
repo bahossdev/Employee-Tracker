@@ -7,7 +7,6 @@ A command-line application for managing employees, roles, and departments.
 This Node.js command-line application allows users to efficiently manage employees, roles, and departments within an organization. It provides a user-friendly interface with various features, including viewing all employees, adding new employees, updating employee roles, and more. The application is backed by a MySQL database, and interactions are facilitated through Inquirer prompts, Chalk, stripAnsi and console.table libraries.
 
 ## Table of Contents
------------------
 
 - [Employee-Tracker](#employee-tracker)
   - [Description](#description)
@@ -24,7 +23,6 @@ This Node.js command-line application allows users to efficiently manage employe
   - [Screenshots](#screenshots)
 
 ## Features
---------
 
 *   **Employee Management:** Add, view, update, and delete employees with ease.
 *   **Role Assignment:** Assign roles to employees and update them as needed.
@@ -59,7 +57,6 @@ Install the required libraries:
 Now, you're ready to efficiently manage your employees, roles, and departments!
 
 ## How to Use
-----------
 
 1.  Run the application using `node index.js`.
 2.  Choose from various options in the main menu:
@@ -78,7 +75,6 @@ Now, you're ready to efficiently manage your employees, roles, and departments!
 **NOTE:** In case of any errors or if you'd like to cancel a task press `ctrl+c (^C)`.
 
 ## Built With
-----------
 
 *   [<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />](https://www.javascript.com)
 *   [<img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" />](https://nodejs.org/en)
@@ -90,12 +86,10 @@ Now, you're ready to efficiently manage your employees, roles, and departments!
     *   [strip-ansi](https://www.npmjs.com/package/strip-ansi)
 
 ## Credits
--------
 
 To create this application, I referenced documentation for MySQL, Node.js, npm, chalk, strip-ansi, console.table and Inquirer Package. Additionally, I drew insights from class activities and consulted resources on MDN, W3Schools, Stack Overflow, and similar educational platforms.
 
 ## License
--------
 Please refer to the LICENSE in the repo.
 
 ## Walkthrough Video
@@ -113,4 +107,7 @@ Link to Walkthrough Video demonstrating the functionality of the Employee-Tracke
 If you have any questions or need further assistance, feel free to reach out @[bahoss.dev@gmail.com](mailto:bahoss.dev@gmail.com).
 
 ## Screenshots
+<img width="916" alt="screenshot3" src="https://github.com/bahossdev/Employee-Tracker/assets/148646212/43d4b4df-5220-49c6-be76-2c961d3dfc6e">
+<img width="1302" alt="screenshot2" src="https://github.com/bahossdev/Employee-Tracker/assets/148646212/80184341-919d-4a8c-bab5-115f0887a6d9">
+<img width="643" alt="screenshot1" src="https://github.com/bahossdev/Employee-Tracker/assets/148646212/7741d032-49e4-41a3-9e73-81545458e8fd">
 
