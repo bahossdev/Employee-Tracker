@@ -107,7 +107,7 @@ Link to Walkthrough Video demonstrating the functionality of the Employee-Tracke
 If you have any questions or need further assistance, feel free to reach out @[bahoss.dev@gmail.com](mailto:bahoss.dev@gmail.com).
 
 ## Screenshots
-<img width="916" alt="screenshot3" src="https://github.com/bahossdev/Employee-Tracker/assets/148646212/43d4b4df-5220-49c6-be76-2c961d3dfc6e">
-<img width="1302" alt="screenshot2" src="https://github.com/bahossdev/Employee-Tracker/assets/148646212/80184341-919d-4a8c-bab5-115f0887a6d9">
 <img width="643" alt="screenshot1" src="https://github.com/bahossdev/Employee-Tracker/assets/148646212/7741d032-49e4-41a3-9e73-81545458e8fd">
+<img width="1302" alt="screenshot2" src="https://github.com/bahossdev/Employee-Tracker/assets/148646212/80184341-919d-4a8c-bab5-115f0887a6d9">
+<img width="916" alt="screenshot3" src="https://github.com/bahossdev/Employee-Tracker/assets/148646212/43d4b4df-5220-49c6-be76-2c961d3dfc6e">
 
