@@ -74,7 +74,7 @@ Now, you're ready to efficiently manage your employees, roles, and departments!
 3.  Follow the prompts to perform desired actions.
 4.  View and manage your employees, roles, and departments seamlessly.
 
-**NOTE** In case of any errors or if you'd like to cancel a task press `ctrl+c (^C)`.
+**NOTE:** In case of any errors or if you'd like to cancel a task press `ctrl+c (^C)`.
 
 ## Built With
 ----------
