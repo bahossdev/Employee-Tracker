@@ -4,7 +4,7 @@ A command-line application for managing employees, roles, and departments.
 
 ## Description
 
-This Node.js command-line application allows users to efficiently manage employees, roles, and departments within an organization. It provides a user-friendly interface with various features, including viewing all employees, adding new employees, updating employee roles, and more. The application is backed by a MySQL database, and interactions are facilitated through Inquirer prompts, Chalk, stripAnsi and console.table libraries.
+This Node.js command-line application allows users to efficiently manage employees, roles, and departments within an organization. It provides a user-friendly interface with various features, including viewing all employees, adding new employees, updating employee roles, and more. The application is backed by a MySQL database, and interactions are facilitated through Inquirer prompts, Chalk, strip-ansi and console.table libraries.
 
 ## Table of Contents
 
