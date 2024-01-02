@@ -25,7 +25,7 @@ This Node.js command-line application allows users to efficiently manage employe
 ## Features
 
 *   **Employee Management:** Add, view, update, and delete employees with ease.
-*   **Role Assignment:** Assign roles to employees and update them as needed.
+*   **Role Management:** Add, view, and delete roles or assign them to employees and update them as needed.
 *   **Department Management:** View all departments and their budgets.
 *   **Enhanced Interface:** Utilizes Inquirer for intuitive interaction.
 *   **MySQL Database:** Persists data in a MySQL database for reliability.
